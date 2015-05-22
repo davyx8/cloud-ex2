@@ -1,0 +1,82 @@
+
+{% block body %}
+<script>
+var newAlbumName;
+var apath="/createNewAlbum/{{username}}"
+
+function get_name()
+{
+newAlbumName=document.getElementById('nnnn').value;
+apath=apath+"/"+newAlbumName;
+chgAction();
+document.getElementById("frm").submit();
+}
+
+
+function a(){
+	return apath+"/"+newAlbumName;
+}
+
+
+function chgAction()
+{
+	//alert (apath);
+        document.frm.action = apath;
+}
+
+
+function set_action()
+{
+	return path+"/"+newAlbumName;
+}
+
+
+</script>
+
+<div align="center"><h1>{{ title }}</h1></div>
+
+<div id="album_images">
+
+<form  method="post"  name="frm" id="frm" action="">
+</form>
+to create a new albom insert the name here please<input name="newAlbum" type="text" id="nnnn">
+<button type="button" onClick="get_name()"  name="tttttt" value="click here">Click Here</button>
+
+</div>
+
+
+<h2>albums with write/read access</h2>
+
+
+
+{% for album in albumsWrite %}
+<div id="albumsWrite">
+<a href="http://davyx8.cloudapp.net/{{album}}/images">{{album}}</a>     
+</div>
+{% endfor %}
+
+</div>
+
+
+
+<h3>albums with read access </h3>
+{% for album in albumsRead %}
+
+<div id="albumsRead">
+
+<a href="http://davyx8.cloudapp.net/{{album}}/images">{{album}}</a>     
+</div>
+{% endfor %}
+
+</div>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+

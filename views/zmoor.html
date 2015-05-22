@@ -1,0 +1,21 @@
+
+{% block body %}
+<script src="css/vex.combined.min.js"></script>
+<script>vex.defaultOptions.className = 'vex-theme-os';</script>
+<link rel="stylesheet" href="css/ex.css" />
+<link rel="stylesheet" href="css/vex-theme-os.css" /> 
+ <script>
+  vex.dialog.open({
+      message: 'Enter your username and password:',
+      input: '<input name="username" type="text" placeholder="Username" required /> <input name="password" type="password" placeholder="Password" required />',
+      buttons: [
+          $.extend({}, vex.dialog.buttons.YES, { text: 'Register' }),
+      ],
+      callback: function (data) {
+        post('{{ url_for('register') }}', {'username': data.username, 'password': data.password})
+      }
+    });
+  {% if error %} vex.dialog.alert({message: '{{ error }}'}); {% endif %}
+  </script>
+<body>fuck u hofman </body>
+{% endblock %}

@@ -1,0 +1,87 @@
+
+
+
+
+
+<!doctype html>
+<title>Gallery - {{ title }}</title>
+
+
+
+<script>
+var read,write,user;
+var apath="/{{album_name}}/"
+
+function get_name()
+{
+write=document.getElementById('r&w').checked;
+read=document.getElementById('read').checked;
+user=document.getElementById('adduser').value;
+
+
+if (read){ apath=apath+"addUserRead/"+user;   }
+else if (write) { apath=apath+"addUserWrite/"+user; }
+chgAction();
+alert(document.f1.action);
+
+document.getElementById("f1").submit();
+}
+
+
+function a(){
+	return apath+"/"+newAlbumName;
+}
+
+
+function chgAction()
+{
+	//alert (apath);
+        document.f1.action = apath;
+}
+
+
+function set_action()
+{
+	return path+"/"+newAlbumName;
+}
+
+
+
+
+
+
+</script>
+{% block body %}
+
+
+  <div align="center"><h1>{{ title }}</h1></div>
+
+
+  <div id="album_images">
+
+    {% if album_name %}
+
+    <div align="left"><h2>{{ album_name }}</h2></div>
+    </div>
+  	<form id="f1" action="" name="f1" method="post" ><br>
+	</form>
+	<form>
+	<input type="radio" name="read" id="read" checked>read<br>
+	<input type="radio" name="read" id="r&w">read/write<br>
+	</form>
+	 pleas enter the name of the user you want to add <input type="text" name="addUser" id="adduser"><br>
+	<button type="button" onClick="get_name()"  name="tttttt" value="click here">Click Here</button><br>
+	<form id="frm" action="http://davyx8.cloudapp.net/albums/{{album_name}}/{{user_name}}/upload" method="post" name="albumName" value={{album_name}} enctype="multipart/form-data" ><br>
+	Select a file: <input type="file" name="img"><br>
+  	<input type="submit" name="shai" value="pash is gey" ><br>
+	</form>
+    {% for image in images %}
+      <div id="album_image_div">
+	{{image}}
+        <img onclick="remove_image('{{image}}')" src="https://imgallery.blob.core.windows.net/{{album_name}}/{{image}}">
+		 </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+
+{% endblock %}
