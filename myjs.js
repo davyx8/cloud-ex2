@@ -5,13 +5,13 @@ alert("Hello World")
 
 function LOG_IN() {
 //alert("moving to log in page");
-window.location.href = 'file/login.html';
+window.location.href = 'login.html';
 };
 
 
 function NEW_USER() {
 //alert("moving to newwwwwwwwww");
-window.location.href = 'file/new_user.html';
+window.location.href = 'new_user.html';
 
 };
 

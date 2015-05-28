@@ -5,7 +5,11 @@
 
 <!doctype html>
 <title>Gallery - {{ title }}</title>
+<style>
 
+
+
+</style>
 
 
 <script>
@@ -45,12 +49,9 @@ function set_action()
 	return path+"/"+newAlbumName;
 }
 
-
-
-
-
-
 </script>
+
+
 {% block body %}
 
 
@@ -60,7 +61,6 @@ function set_action()
   <div id="album_images">
 
     {% if album_name %}
-
     <div align="left"><h2>{{ album_name }}</h2></div>
     </div>
   	<form id="f1" action="" name="f1" method="post" ><br>
@@ -70,16 +70,16 @@ function set_action()
 	<input type="radio" name="read" id="r&w">read/write<br>
 	</form>
 	 pleas enter the name of the user you want to add <input type="text" name="addUser" id="adduser"><br>
-	<button type="button" onClick="get_name()"  name="tttttt" value="click here">Click Here</button><br>
+	<button type="button" onClick="get_name()"  name="tttttt" value="click here">add user</button><br>
 	<form id="frm" action="http://davyx8.cloudapp.net/albums/{{album_name}}/{{user_name}}/upload" method="post" name="albumName" value={{album_name}} enctype="multipart/form-data" ><br>
-	Select a file: <input type="file" name="img"><br>
-  	<input type="submit" name="shai" value="pash is gey" ><br>
+	Select a file: (jpeg, gif only) <input type="file" name="img"><br>
+  	<input type="submit" name="shai" value="upload file" ><br>
 	</form>
     {% for image in images %}
       <div id="album_image_div">
 	{{image}}
         <img onclick="remove_image('{{image}}')" src="https://imgallery.blob.core.windows.net/{{album_name}}/{{image}}">
-		 </div>
+</div>
     {% endfor %}
     {% endif %}
   </div>
