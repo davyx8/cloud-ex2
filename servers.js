@@ -1,5 +1,5 @@
 var app = require('express')(),
-   swig = require('swig');
+    swig = require('swig');
 var express=require("express");
 var multer  = require('multer');
 var multiparty = require('multiparty');
@@ -35,10 +35,12 @@ var crypto = require('crypto');
 
 
 app.get('/:username/albums',function (req, res) {
+		var minute =300* 1000;
 		var albumsRead=[]
 		var noRead=true;
 		var albumsWrite=[];
 		var username=req.params.username;
+		//res.cookie('username', username, { maxAge: minute });
 		db.albums.find({'read': username }).toArray(function(err,docs){
 
 			if (docs.length === 0 ) {
@@ -77,7 +79,7 @@ app.get('/:username/albums',function (req, res) {
 
 app.post('/login',function(req,res,seeAlbums){
 
-		var minute =100* 1000;
+		var minute =300* 1000;
 		var form = new formidable.IncomingForm();
 		var username=req.body.username;
 		var password=req.body.password;
@@ -92,7 +94,7 @@ app.post('/login',function(req,res,seeAlbums){
 			} );
 
 
-});
+		});
 
 
 
@@ -106,16 +108,18 @@ app.post('/login',function(req,res,seeAlbums){
 
 
 app.post('/newUser',function(req,res,next){
-		var minute= 100  *1000;
+		var minute= 300  *1000;
 		var username=req.body.username;
 		var password=req.body.password;
+		if (username === "" || password === "" ){ res.send ("pleas enter valid username and/or password ");  }
+		else {
 		db.users.find({'username': username }).toArray(function(err,docs){ 
 			if (docs.length === 0 ) {
 			res.cookie('username', username, { maxAge: minute });
 			db.users.insert({'username': username ,'password': password});
 			if(req.body.ContentType==='application/json'){
-				res.send('username added!');
-				}
+			res.send('username added!');
+			}
 			else{res.redirect(username+"/albums");}
 			} 
 			else { 
@@ -123,8 +127,8 @@ app.post('/newUser',function(req,res,next){
 			}  
 			} );
 
-
-		});
+		}
+});
 
 
 function hello(path, req,res){
@@ -148,21 +152,21 @@ app.get('/file/:file',function(req,res){
 			try {
 			stats = fs.lstatSync('./'+file);
 			if (stats.isFile()) {
-				var auth = (AuthPages.indexOf(file) > -1);
-				if ( (file === "login.html" || file=== "new_user.html") && isValid  ){
-					res.redirect("/"+req.cookies.username+"/albums");
+			var auth = (AuthPages.indexOf(file) > -1);
+			if ( (file === "login.html") && isValid  ){
+			res.redirect("/"+req.cookies.username+"/albums");
 
-				}
-				else if (  (auth && req.cookies.username) ){
-					res.sendfile('./'+file);
-				}
-				else if ( !auth  ){
+			}
+			else if (  (auth && req.cookies.username) ){
+			res.sendfile('./'+file);
+			}
+			else if ( !auth  ){
 
-					res.sendfile("./"+file);
-				}
-				else{
-						res.sendfile("./login.html")
-				}
+				res.sendfile("./"+file);
+			}
+			else{
+				res.sendfile("./login.html")
+			}
 			}
 			else{
 				res.sendfile("./index.html");}
@@ -179,40 +183,45 @@ app.get('/file/:file',function(req,res){
 
 
 app.post('/:album/addUserRead/:newUser', function (req, res) {
-		
+
 		var username=req.params.newUser;
 		db.albums.find({"name":req.params.album,"write":req.cookies.username },function(err,docs){
-		if(docs.length!==0){
-		db.albums.update({'name':req.params.album },{$push:{read:username } },function(err,docs){console.log(err);res.send("user updated!")} );
-		}
-		else{
-		res.send("you cant do that mate")
-		}
+			if(docs.length!==0){
+			db.albums.update({'name':req.params.album },{$push:{read:username } },function(err,docs){console.log(err);res.send("user updated!")} );
+			}
+			else{
+			res.send("you cant do that mate")
+			}
+			});
 		});
-});
 
 
 
 
 
 app.post('/:album/addUserWrite/:newUser', function (req, res) {
-		
+
 
 		var username=req.params.newUser;
-                db.albums.find({"name":req.params.album,"write":req.cookies.username },function(err,docs){
+		db.albums.find({"name":req.params.album,"write":req.cookies.username },function(err,docs){
 
-                if(docs.length!==0){
-                db.albums.update({'name':req.params.album },{$push:{read:username } },function(err,docs){console.log(err)} );
-                 db.albums.update({'name':req.params.album },{$push:{write:username } },function(err,docs){console.log(err); res.send("user updated!")} );
+			if(docs.length!==0){
+			db.albums.update({'name':req.params.album },{$push:{read:username } },function(err,docs){console.log(err)} );
+			db.albums.update({'name':req.params.album },{$push:{write:username } },function(err,docs){console.log(err); res.send("user updated!")} );
 
-		}
-                else{
+			}
+			else{
 			res.send("you cant bloody do that!")
-                }
-                });
-});
+			}
+			});
+		});
 
+app.post("/log_out",function (req, res){
+		var minute= 1;
+		res.cookie('username', "", { maxAge: minute });
+		res.redirect("/" );
 
+		});
 
 
 app.post('/albums/:album/:user/upload', function (req, res) {
@@ -222,13 +231,13 @@ app.post('/albums/:album/:user/upload', function (req, res) {
 		var curl= req.cookie;
 		var user=req.params.user;
 		var album= req.params.album;
-	//	db.albums.find({},function(err,docs){console.log(docs);console.log(err)});
+		//	db.albums.find({},function(err,docs){console.log(docs);console.log(err)});
 		db.albums.find({'name':album,'write':user},function(err,docs){
 			if(docs.length!==0){
 			if(req.body.ContentType==='application/json'){
-                                res.send('picture added!');
+			res.send('picture added!');
 
-                                }
+			}
 			else{
 			form.on('part', function(part) {
 				if (part.filename) {
@@ -236,10 +245,10 @@ app.post('/albums/:album/:user/upload', function (req, res) {
 				var name = part.filename;
 				try{
 				addImage(req.params.album,part,size,req,res)}
-			
+
 				catch(err){
-			console.log(err)
-			res.send("bad gateway")
+				console.log(err)
+				res.send("bad gateway")
 				}
 				} else {
 
@@ -254,7 +263,7 @@ app.post('/albums/:album/:user/upload', function (req, res) {
 });
 
 function addImage(albumName ,part,size,req,res){
-		blobSvc = azure.createBlobService('imgallery','+ooOpZ195pkhCHARogYMtOyr8u9C0edW7ltUl2DDfhp2TpV8H5HTsjag/we8NVRfa12h53qR0cCPH0JuiJiDdQ=='); 
+	blobSvc = azure.createBlobService('imgallery','+ooOpZ195pkhCHARogYMtOyr8u9C0edW7ltUl2DDfhp2TpV8H5HTsjag/we8NVRfa12h53qR0cCPH0JuiJiDdQ=='); 
 	console.log(part.filename)
 		blobSvc.createBlockBlobFromStream(albumName, part.filename, part, size, function(error,result,resp) {
 				if (error) {
@@ -275,7 +284,7 @@ function addImage(albumName ,part,size,req,res){
 
 
 app.post('/createNewAlbum/:username/:albumName',function(req,res){
-		
+
 		var username=req.params.username;
 		var newContainer=req.params.albumName;
 		console.log(newContainer);
@@ -283,10 +292,10 @@ app.post('/createNewAlbum/:username/:albumName',function(req,res){
 			if(!error){
 			db.albums.insert({"name" : newContainer, "read" : [ username], "write" : [  username ], "images" : [ ] });
 			if(req.body.ContentType==='application/json'){
-                                res.send('album added!');
+			res.send('album added!');
 
-                                }
-                        else{
+			}
+			else{
 			res.redirect("/"+username+"/albums");
 			}}
 			else{
@@ -295,7 +304,7 @@ app.post('/createNewAlbum/:username/:albumName',function(req,res){
 			}
 			});
 
-		});
+});
 
 
 
@@ -355,12 +364,10 @@ app.get('/:album/images', function (req, res) {
 			else{
 				res.send("no through road!")
 			}
-			});
-
-
 		});
 
 
+});
 
 
 
@@ -390,7 +397,9 @@ app.get('/:album/images', function (req, res) {
 
 
 
-		/*Run the server.*/
-		app.listen(8080,function(){
+
+
+/*Run the server.*/
+app.listen(8080,function(){
 		console.log("listening on port 8080")	
 		});

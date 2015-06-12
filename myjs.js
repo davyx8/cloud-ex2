@@ -17,7 +17,7 @@ window.location.href = 'new_user.html';
 
 
 
-var btn = document.createElement("BUTTON1");        // Create a <button> element
-var t = document.createTextNode("log in");       // Create a text node
-btn.appendChild(t);                                // Append the text to <button>
-document.body.appendChild(btn); 
+//var btn = document.createElement("BUTTON1");        // Create a <button> element
+//var t = document.createTextNode("log in");       // Create a text node
+//btn.appendChild(t);                                // Append the text to <button>
+//document.body.appendChild(btn); 

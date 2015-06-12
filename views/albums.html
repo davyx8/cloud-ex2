@@ -1,4 +1,8 @@
 {% block body %}
+<style>
+
+</style>
+
 <script>
 var newAlbumName;
 var apath="/createNewAlbum/{{username}}"
@@ -21,13 +25,25 @@ function set_action()
 {
 	return path+"/"+newAlbumName;
 }
+function log_out()
+{
+        var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "/log_out");
+        form.submit();
+}
+
+
 </script>
-<div align="center"><h1>{{ title }}</h1></div>
+<button type="button" onClick="log_out()" name="log_out" value="log out" style="position:relative; top:100px;  left:1500px;" >log out</button>
+<hr>
+<div align="center" ><h1>{{ title }}</h1></div>
 <div id="album_images">
 <form method="post" name="frm" id="frm" action="">
 </form>
-to create a new album insert the name here please<input name="newAlbum" type="text" id="nnnn">
-<button type="button" onClick="get_name()" name="tttttt" value="create">Click Here</button>
+to create a new album insert the name here please<input name="newAlbum" type="text" id="nnnn" >
+<button type="button" onClick="get_name()" name="tttttt" value="create" >Click Here</button>
+
 </div>
 <h2>albums with write/read access</h2>
 {% for album in albumsWrite %}
@@ -44,6 +60,7 @@ to create a new album insert the name here please<input name="newAlbum" type="te
 {% endfor %}
 </div>
 {% endblock %}
+</hr>
 
 
 

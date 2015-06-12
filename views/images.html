@@ -49,12 +49,26 @@ function set_action()
 	return path+"/"+newAlbumName;
 }
 
+function log_out()
+{
+        var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "/log_out");
+        form.submit();
+}
+
+
+
+
+
+
+
 </script>
 
 
 {% block body %}
 
-
+<backround="boat.jpg" >
   <div align="center"><h1>{{ title }}</h1></div>
 
 
@@ -63,7 +77,9 @@ function set_action()
     {% if album_name %}
     <div align="left"><h2>{{ album_name }}</h2></div>
     </div>
-  	<form id="f1" action="" name="f1" method="post" ><br>
+  	
+	<button type="button" onClick="log_out()" name="log_out" value="log out" style="position:relative; top:100px;  left:1500px;" >log out</button>
+	<form id="f1" action="" name="f1" method="post" ><br>
 	</form>
 	<form>
 	<input type="radio" name="read" id="read" checked>read<br>

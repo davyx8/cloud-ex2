@@ -1,7 +1,5 @@
 <html>
 <head>
-<script src="myjs.js">
-</script>
 <style>
 h3 {
 	text-align: center;
@@ -9,21 +7,53 @@ h3 {
 }
 h2 {
     position: absolute;
-    left: 800px;
+    left: 700px;
     top: 200px;
+}
+neon {
+    color: #D0F8FF;
+    text-shadow: 0 0 5px #A5F1FF, 0 0 10px #A5F1FF,
+             0 0 20px #A5F1FF, 0 0 30px #A5F1FF,
+             0 0 40px #A5F1FF;
+}
+
+masking h3{
+    color: #FFFFFF;
+    -webkit-mask-box-image: url(mask.png) 0 0 repeat;
 }
 </style>
 </head>
-<body>
+<body background="backround23.jpg">
 <h3>wellcome to our picturs manager</h3> 
 <h2>
-<input id=loginB type="button" onclick="LOG_IN()" value="log in">
-<br>
-<br>
-<br>
+<input id=loginB type="button" onclick="LOG_IN()" value="log in" style="neon"> &nbsp;  
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
 <input id=loginA type="button" onclick="NEW_USER()" value="new user">
 </br>
 </h2>
 
 </body>
+<script src="myjs.js">
+</script>
+
+
 </html>

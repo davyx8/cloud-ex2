@@ -2,14 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Hello World</title>
+<title>log in page</title>
 
 </head>
-<body>
-<h1>Hello World</h1>
-<p>
-image gallery
-</p>
+ 
+</head>
+<style>
+h1 {
+        text-align: center;
+        font-size: 250%;
+
+}
+</style>
+
+<body background="albums_cover.jpg">
+ 
+<h1>Please Be Kind And Log In</h1>
 <script type = "text/javascript">
 
 // Note: Like all Javascript password scripts, this is hopelessly insecure as the user can see 
@@ -32,8 +40,10 @@ document.getElementById("frm").submit();
 </script>
 
 <form name = "myform" id="frm" method="post" action="http://davyx8.cloudapp.net/login">
-<p>ENTER USER NAME <input type="text" name="username" id="userName"> ENTER PASSWORD <input type="password" name="password" id="passWord"><input type="button" value="Check In" name="Submit" onclick= "validate()">
-</p>
+<p  style="position: absolute ; left: 100px;  ">ENTER USER NAME <input type="text" name="username" id="userName" ></p>
+<p  style="position: absolute ; left: 650px;  "> ENTER PASSWORD <input type="password" name="password" id="passWord" > </p>
+<br>
+<p  style="position: absolute ; left: 300px; top: 200px "> <input type="button" value="Check In" name="Submit" onclick= "validate()" > </p>
 
 </form>
 </body>

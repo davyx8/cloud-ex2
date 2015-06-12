@@ -9,7 +9,7 @@
 
 
 </head>
-<body>
+<body background="bright.jpg">
 <h1>welcome!!</h1>
 <p>
 pleas enter user name and password!!!!
@@ -33,7 +33,10 @@ document.getElementById("frm").submit();
 </script>
 
 <form name = "myform" id="frm" method="post" action="http://davyx8.cloudapp.net/newUser">
-<p>ENTER USER NAME <input type="text" name="username"> ENTER PASSWORD <input type="password" name="password"><input type="button" value="Check In" name="Submit" onclick= "validate()">
+<p  style="position: absolute ; left: 100px;  "  >ENTER USER NAME <input type="text" name="username"> </p>
+<p  style="position: absolute ; left: 650px;  " >ENTER PASSWORD <input type="password" name="password"></p>
+<br>
+<p style="position: absolute ; left: 300px; top: 200px " ><input type="button" value="Check In" name="Submit" onclick= "validate()">
 </p>
 
 </form>
